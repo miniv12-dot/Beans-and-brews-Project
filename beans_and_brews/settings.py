@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
-from pathlib import Path, os
+from pathlib import Path, os, dj_database_url
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -97,7 +97,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
+if os.environ.get('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
