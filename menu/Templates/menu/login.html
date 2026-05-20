@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log In - Beans & Brews</title>
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="focused-card" style="max-width: 450px;">
+            
+            <h1 style="color: #2B1B17; font-size: 1.8rem; font-weight: 800; text-align: center; margin-bottom: 30px;">Welcome Back</h1>
+            
+            <form method="POST" style="display: flex; flex-direction: column; gap: 20px;">
+                {% csrf_token %}
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;" class="django-form-inputs">
+                    {{ form.as_p }}
+                </div>
+
+                <button type="submit" style="background-color: #2B1B17; color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 10px; box-shadow: 0 6px 16px rgba(43, 27, 23, 0.15);">
+                    Log In
+                </button>
+            </form>
+
+            <p style="text-align: center; color: #6E5D53; font-size: 0.95rem; margin-top: 25px;">
+                New to Beans & Brews? <a href="{% url 'register' %}" style="color: #E05A36; font-weight: 700; text-decoration: none;">Create an account</a>
+            </p>
+
+        </div>
+    </div>
+
+</body>
+</html>

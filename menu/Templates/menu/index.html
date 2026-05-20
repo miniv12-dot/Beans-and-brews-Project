@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Beans & Brews - Premium Coffee Menu</title>
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <nav class="navbar">
+            <div class="navbar-brand">☕ Beans & Brews</div>
+            <div class="nav-links">
+                {% if user.is_authenticated %}
+                   <span style="color: #FDFBF7; margin-right: 15px; font-weight: 600;">Hello, {{ user.username }}!</span>
+                    <a href="{% url 'my_orders' %}">My Orders</a>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline; margin-left: 20px;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn" style="background: none; border: none; cursor: pointer; font-family: inherit; font-size: inherit;">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Log In</a>
+                    <a href="{% url 'register' %}" class="signup-btn">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% if usual_drink %}
+            <div style="background: #FDFBF7; border: 1px dashed #d7ccc8; border-radius: 16px; padding: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(43,27,23,0.01);">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 2rem; line-height: 1;">🌟</span>
+                    <div>
+                        <span style="display: block; font-size: 0.85rem; font-weight: 800; color: #E05A36; text-transform: uppercase; letter-spacing: 0.5px;">Your Usual Routine</span>
+                        <strong style="font-size: 1.15rem; color: #2B1B17; font-weight: 800;">Ready for your morning {{ usual_drink.name }}?</strong>
+                    </div>
+                </div>
+                <a href="{% url 'add_to_cart' usual_drink.id %}" style="text-decoration: none; background-color: #2B1B17; color: white; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(43,27,23,0.1); transition: all 0.2s;"
+                   onmouseover="this.style.backgroundColor='#E05A36';" onmouseout="this.style.backgroundColor='#2B1B17';">
+                    + One-Click Reorder
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="filter-bar">
+            <span class="filter-label">Filter Menu:</span>
+            
+            <a href="{% url 'home' %}" class="filter-pill {% if not selected_category %}active{% endif %}">
+               All Items
+            </a>
+
+            {% for cat in categories %}
+                <a href="{% url 'home_by_category' cat.slug %}" class="filter-pill {% if selected_category.id == cat.id %}active{% endif %}">
+                   {{ cat.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <div class="menu-grid">
+            {% for drink in drinks %}
+                <a href="{% url 'drink_detail' drink.id %}" class="card-link">
+                    <div class="drink-card">
+                        {% if drink.image %}
+                            <img src="{{ drink.image.url }}" alt="{{ drink.name }}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;">
+                        {% endif %}
+                        <h3 class="drink-name">{{ drink.name }}</h3>
+                        <p class="drink-desc">{{ drink.description }}</p>
+                        <div class="drink-meta">
+                            <span class="drink-price">R {{ drink.price }}</span>
+                            <span class="view-badge">Order Now &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</body>
+</html>

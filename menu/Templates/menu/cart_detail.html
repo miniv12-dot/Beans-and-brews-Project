@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart - Beans & Brews</title>
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+</head>
+<body>
+    <div style="max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        
+        <a href="{% url 'home' %}" style="text-decoration: none; color: #d84315;">&larr; Back to Menu</a>
+        
+        <h1 style="text-align: left; margin-top: 20px;">Your Cart</h1>
+        
+        {% if cart %}
+            <ul style="list-style-type: none; padding: 0;">
+                {% for drink_id, item in cart.items %}
+                    <li style="border-bottom: 1px solid #eee; padding: 15px 0; display: flex; justify-content: space-between; align-items: center;">
+                        
+                        <div>
+                            <span style="font-size: 1.1rem; font-weight: bold;">{{ item.name }}</span>
+                            <span style="display: block; color: #666; font-size: 0.9rem; margin-top: 4px;">R {{ item.price }} each</span>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            
+                            <a href="{% url 'update_cart' drink_id 'decrement' %}" style="text-decoration: none; background-color: #eee; color: #333; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; border-radius: 4px; font-weight: bold;">-</a>
+                            
+                            <span style="font-size: 1.1rem; font-weight: bold; min-width: 20px; text-align: center;">{{ item.quantity }}</span>
+                            
+                            <a href="{% url 'update_cart' drink_id 'increment' %}" style="text-decoration: none; background-color: #eee; color: #333; width: 30px; height: 30px; display: flex; justify-content: center; align-items: center; border-radius: 4px; font-weight: bold;">+</a>
+                            
+                            <a href="{% url 'remove_from_cart' drink_id %}" style="text-decoration: none; color: #d84315; margin-left: 10px; font-size: 0.9rem; font-weight: bold;">Remove</a>
+                        </div>
+                        
+                    </li>
+                {% endfor %}
+            <div style="margin-top: 30px; border-top: 2px dashed #eee; padding-top: 20px;">
+                <h3 style="color: #4e342e; margin-bottom: 15px; font-size: 1.1rem;">Want to add a different coffee?</h3>
+                <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px;">
+                    {% for drink in other_drinks %}
+                        <div style="background: #fdfbf7; border: 1px solid #e0d4cc; padding: 12px; border-radius: 6px; min-width: 140px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center;">
+                            <span style="font-weight: bold; font-size: 0.95rem; display: block; margin-bottom: 4px;">{{ drink.name }}</span>
+                            <span style="color: #d84315; font-size: 0.9rem; font-weight: bold; margin-bottom: 8px;">R {{ drink.price }}</span>
+                            
+                            <a href="{% url 'add_to_cart' drink.id %}" style="text-decoration: none; background-color: #4e342e; color: white; padding: 5px 12px; font-size: 0.85rem; border-radius: 4px; font-weight: bold;">+ Add</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <h2 style="text-align: right; color: #d84315;">Total: R {{ total_price|floatformat:2 }}</h2>
+            
+            <a href="{% url 'checkout' %}" style="text-decoration: none;">
+                <button style="width: 100%; padding: 15px; background-color: #4e342e; color: white; border: none; border-radius: 4px; font-size: 1.1rem; cursor: pointer; margin-top: 10px;">
+                    Proceed to Checkout
+                </button>
+            </a>
+            
+        {% else %}
+            <p style="margin-top: 20px; font-size: 1.1rem;">Your cart is currently empty! Go grab a brew.</p>
+        {% endif %}
+        
+    </div>
+</body>
+</html>

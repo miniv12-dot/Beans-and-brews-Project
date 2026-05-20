@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barista Command Center - Beans & Brews</title>
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
+</head>
+<body>
+
+    <div class="app-container" style="max-width: 900px; margin-top: 40px;">
+        
+        <div style="background-color: #2B1B17; padding: 25px; border-radius: 16px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 24px rgba(43,27,23,0.15);">
+            <h1 style="color: white; margin: 0; font-size: 1.6rem; font-weight: 800;">☕ Barista Live Queue</h1>
+            <span style="background-color: #E05A36; color: white; padding: 6px 14px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Staff Mode</span>
+        </div>
+
+        {% if orders %}
+            <div style="display: flex; flex-direction: column; gap: 25px;">
+                {% for order in orders %}
+                    <div style="background: white; border-radius: 16px; padding: 25px; border: 1px solid #EFECE6; box-shadow: 0 4px 12px rgba(0,0,0,0.01); display: flex; justify-content: space-between; align-items: center;">
+                        
+                        <div style="flex-grow: 1;">
+                            <h3 style="color: #2B1B17; font-size: 1.25rem; font-weight: 800; margin-bottom: 4px;">Order #{{ order.id }}</h3>
+                            <p style="color: #6E5D53; font-weight: 600; font-size: 0.95rem; margin-bottom: 15px;">Customer: {{ order.first_name }} {{ order.last_name }}</p>
+                            
+                            <ul style="list-style: none; border-top: 1px dashed #EFECE6; padding-top: 12px; margin: 0;">
+                                {% for item in order.items.all %}
+                                    <li style="color: #2B1B17; font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">
+                                        <span style="color: #E05A36;">{{ item.quantity }}x</span> {{ item.drink.name }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div>
+                            <a href="{% url 'complete_order' order.id %}" style="text-decoration: none; background-color: #2B1B17; color: white; padding: 14px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; display: block; text-align: center; transition: background 0.2s; box-shadow: 0 4px 12px rgba(43,27,23,0.15);"
+                               onmouseover="this.style.backgroundColor='#E05A36';" onmouseout="this.style.backgroundColor='#2B1B17';">
+                                Mark as Ready
+                            </a>
+                        </div>
+
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; background: white; padding: 50px; border-radius: 16px; border: 1px solid #EFECE6;">
+                <h2 style="color: #6E5D53; font-size: 1.3rem; font-weight: 700; margin-bottom: 8px;">No Pending Orders! 🎉</h2>
+                <p style="color: #A08A80; font-size: 0.95rem;">The coffee queue is completely clear. Time to relax.</p>
+            </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
