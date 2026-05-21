@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-d58lpu%mfenswq_gs1o&k#sehzlzei#3!v46uv9w-)s%)yok*(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# FIX: Allow local development and your live Render platform URL structure
+# Allow local development and your live Render platform URL structure
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.onrender.com']
 
 
@@ -27,13 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles', # Core asset handler active
+    'django.contrib.staticfiles', 
     'menu',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # FIX: Crucial for rendering live CSS styles
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,21 +62,34 @@ TEMPLATES = [
 WSGI_APPLICATION = 'beans_and_brews.wsgi.application'
 
 
-# 3. Database Architecture Matrix (Optimized for automatic fallback)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'beans_and_brews_db',
-        'USER': 'postgres',
-        'PASSWORD': 'Mini', 
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
+# ==============================================================================
+# DATABASE CONFIGURATION MATRIX (FIXED & CLEANED)
+# ==============================================================================
 
-# Overrides the local configuration immediately if Render's DATABASE_URL is found
-if os.environ.get('DATABASE_URL'):
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# Check if Render is passing a live database URL string
+PRODUCTION_DB_URL = os.environ.get('DATABASE_URL')
+
+if PRODUCTION_DB_URL:
+    # If it exists, force the application to use the cloud PostgreSQL database
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=PRODUCTION_DB_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    # FALLBACK: If running locally on your PC, use your local PostgreSQL setup
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'beans_and_brews_db',
+            'USER': 'postgres',
+            'PASSWORD': 'Mini', 
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # 4. Authentication Matrix
