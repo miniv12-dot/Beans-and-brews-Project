@@ -46,5 +46,51 @@
         
         <a href="{% url 'login' %}" class="back-link">Already have an account? <strong>Log in here</strong></a>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Find every password input on the page
+            const passwordInputs = document.querySelectorAll('input[type="password"]');
+            
+            passwordInputs.forEach(function(input) {
+                // 2. Create a wrapper div so we can position the icon perfectly inside the input
+                const wrapper = document.createElement('div');
+                wrapper.style.position = 'relative';
+                wrapper.style.display = 'block';
+                wrapper.style.width = '100%';
+                
+                // 3. Move the input inside our new wrapper
+                input.parentNode.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+                
+                // 4. Create the clickable eye icon
+                const toggleBtn = document.createElement('span');
+                toggleBtn.innerHTML = '👁️'; 
+                toggleBtn.style.position = 'absolute';
+                toggleBtn.style.right = '12px';
+                toggleBtn.style.top = '50%';
+                toggleBtn.style.transform = 'translateY(-50%)';
+                toggleBtn.style.cursor = 'pointer';
+                toggleBtn.style.fontSize = '1.1rem';
+                toggleBtn.style.userSelect = 'none'; // Stops accidental highlighting
+                
+                // 5. Add extra padding so long passwords don't hide behind the icon
+                input.style.paddingRight = '40px';
+                
+                // 6. The Toggle Logic
+                toggleBtn.addEventListener('click', function() {
+                    if (input.type === 'password') {
+                        input.type = 'text'; // Show text
+                        toggleBtn.innerHTML = '🙈'; // Swap to 'hidden' icon
+                    } else {
+                        input.type = 'password'; // Hide text
+                        toggleBtn.innerHTML = '👁️'; // Swap to 'visible' icon
+                    }
+                });
+                
+                // 7. Inject the button into the wrapper
+                wrapper.appendChild(toggleBtn);
+            });
+        });
+    </script>
 </body>
 </html>
