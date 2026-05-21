@@ -146,6 +146,22 @@ def my_orders(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'menu/my_orders.html', {'orders': orders})
 
+from .forms import CustomRegisterForm, UserUpdateForm # Make sure UserUpdateForm is imported
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        # The 'instance=request.user' tells Django to update THIS specific user
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home') 
+    else:
+        # If it's a GET request, pre-fill the form with their current info
+        form = UserUpdateForm(instance=request.user)
+        
+    return render(request, 'menu/edit_profile.html', {'form': form})
+
 
 # 8. Update Cart Item Quantity View
 def update_cart(request, drink_id, action):
