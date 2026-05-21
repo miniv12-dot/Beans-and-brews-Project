@@ -134,3 +134,5 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+# Tell WhiteNoise to ignore missing files during collectstatic processing
+WHITENOISE_MANIFEST_STRICT = False
