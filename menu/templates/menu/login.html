@@ -94,6 +94,13 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. DARK MODE SYNC ENGINE
+            // Reads the shared browser storage memory to instantly match index.html
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+
+            // 2. PREMIUM PASSWORD VISIBILITY ENGINE
             const passwordInputs = document.querySelectorAll('input[type="password"]');
             
             // Clean SVG Icons
