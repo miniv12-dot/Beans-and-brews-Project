@@ -7,18 +7,22 @@ from .models import Drink, Order, OrderItem, Category
 from .forms import CustomRegisterForm
 
 # 1. The Home Page View (UPDATED: With "Order My Usual" Optimization)
-def home(request, category_slug=None):
+# 1. The Home Page View
+def home(request): # Removed category_slug parameter
     all_drinks = Drink.objects.all()
     categories = Category.objects.all() # Fetch all categories for the filter nav
     selected_category = None
     usual_drink = None
 
-    # Check if a specific category slug was passed through the URL
-    if category_slug:
-        selected_category = get_object_or_404(Category, slug=category_slug)
+    # NEW: Listen for the ?category= ID from your frontend HTML buttons
+    category_id = request.GET.get('category')
+    
+    # NEW: Filter the database using the category_id instead of a slug
+    if category_id:
+        selected_category = get_object_or_404(Category, id=category_id)
         all_drinks = all_drinks.filter(category=selected_category)
         
-    # NEW LOGIC: Compute the customer's most ordered menu item from PostgreSQL
+    # LOGIC: Compute the customer's most ordered menu item from PostgreSQL
     if request.user.is_authenticated:
         favorite_drink_query = OrderItem.objects.filter(order__user=request.user) \
             .values('drink') \
@@ -36,7 +40,6 @@ def home(request, category_slug=None):
         'usual_drink': usual_drink # Injected into template payload context
     }
     return render(request, 'menu/index.html', context)
-
 
 # 2. The Single Drink Detail View
 def drink_detail(request, drink_id):
