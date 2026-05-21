@@ -1,0 +1,122 @@
+[
+{
+    "model": "menu.category",
+    "pk": 4,
+    "fields": {
+        "name": "Hot Brews",
+        "slug": "hot-brews"
+    }
+},
+{
+    "model": "menu.category",
+    "pk": 5,
+    "fields": {
+        "name": "Cold Iced Coffees",
+        "slug": "cold-iced-coffees"
+    }
+},
+{
+    "model": "menu.category",
+    "pk": 6,
+    "fields": {
+        "name": "Fresh Pastries",
+        "slug": "fresh-pastries"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 4,
+    "fields": {
+        "category": 4,
+        "name": "Cappuccino",
+        "price": "32.00",
+        "description": "A perfectly balanced espresso shot topped with smooth, velvety steamed milk foam.",
+        "is_available": true,
+        "image": "drinks/istockphoto-505168330-1024x1024.jpg"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 5,
+    "fields": {
+        "category": 4,
+        "name": "Spicy Latte",
+        "price": "38.00",
+        "description": "Our signature rich espresso with textured milk, infused with cinnamon and a hint of warm cayenne pepper.",
+        "is_available": true,
+        "image": "drinks/87-Honey-Spicy-Latte-1.avif"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 6,
+    "fields": {
+        "category": 4,
+        "name": "Mocha",
+        "price": "35.00",
+        "description": "It is green full of life, milk, coffee, sugar and everything nice.",
+        "is_available": true,
+        "image": "drinks/latte-art-on-mocha_1200x1200.webp"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 7,
+    "fields": {
+        "category": 4,
+        "name": "White Latte",
+        "price": "30.00",
+        "description": "Smooth, creamy vanilla sugar money bliss in a cup.",
+        "is_available": true,
+        "image": "drinks/latte-vs-flat-white-all-differences-explained.webp"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 8,
+    "fields": {
+        "category": 5,
+        "name": "Iced Americano",
+        "price": "28.00",
+        "description": "Chilled espresso shots topped with cold water and served crisp over clear ice blocks.",
+        "is_available": true,
+        "image": "drinks/homemade-Iced-Americano-recipe_1ig.jpg"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 9,
+    "fields": {
+        "category": 5,
+        "name": "Amapiano Shake",
+        "price": "45.00",
+        "description": "A heavy-hitting blended iced coffee milkshake, packed with condensed milk, cold brew, and biscuit crumbs.",
+        "is_available": true,
+        "image": "drinks/protein_shake_21728_16x9.jpg"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 10,
+    "fields": {
+        "category": 6,
+        "name": "Plain Croissant",
+        "price": "25.00",
+        "description": "Flaky, golden-brown puff pastry baked fresh daily with rich French butter.",
+        "is_available": true,
+        "image": "drinks/Screenshot-2025-09-17-at-13.49.56-600x352.png"
+    }
+},
+{
+    "model": "menu.drink",
+    "pk": 11,
+    "fields": {
+        "category": 6,
+        "name": "Choc Muffin",
+        "price": "28.00",
+        "description": "A deep, double-chocolate chip muffin with a soft gooey center.",
+        "is_available": true,
+        "image": "drinks/Chocolate-Muffins_14.webp"
+    }
+}
+]
