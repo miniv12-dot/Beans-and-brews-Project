@@ -5,30 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account | Beans & Brews</title>
     <style>
+        /* IMPORTANT: @import must be the very first line inside <style> */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap');
+
+        /* THEME VARIABLES */
+        :root {
+            --bg-color: #FAFAFA;
+            --text-main: #2C1E16;
+            --text-muted: #777;
+            --card-bg: white;
+            --border-color: #ddd;
+            --accent-orange: #E07A5F;
+        }
+
+        /* DARK MODE OVERRIDES */
+        [data-theme="dark"] {
+            --bg-color: #1a1614;
+            --text-main: #F5EBE1;
+            --text-muted: #aaa;
+            --card-bg: #2C1E16;
+            --border-color: #4A3022;
+        }
+
+        /* Apply the variables */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 40px 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
         
-        body { font-family: 'Poppins', sans-serif; background-color: #FAFAFA; color: #2C1E16; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 40px 20px; }
+        .auth-container { 
+            background: var(--card-bg); 
+            padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 500px; width: 100%;
+            transition: background-color 0.3s ease;
+        }
         
-        /* Made container slightly wider to accommodate the password rules */
-        .auth-container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 500px; width: 100%; }
-        h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #2C1E16; margin-top: 0; margin-bottom: 25px; text-align: center; }
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--text-main); margin-top: 0; margin-bottom: 25px; text-align: center; }
         
         /* Form Element Styling */
         form p { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-        label { font-weight: 500; font-size: 0.95rem; color: #4A3022; }
-        input { padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Poppins', sans-serif; width: 100%; box-sizing: border-box; transition: border-color 0.3s; }
-        input:focus { border-color: #E07A5F; outline: none; }
+        label { font-weight: 500; font-size: 0.95rem; color: var(--text-main); }
+        
+        input { 
+            padding: 12px 15px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-family: 'Poppins', sans-serif; 
+            width: 100%; 
+            box-sizing: border-box; 
+            background-color: var(--bg-color); 
+            color: var(--text-main);
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s; 
+        }
+        input:focus { border-color: var(--accent-orange); outline: none; }
         
         /* Formatting Django's default help text and error lists */
-        .helptext { font-size: 0.8rem; color: #888; margin-top: 5px; line-height: 1.4; }
+        .helptext { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
         .helptext ul { padding-left: 20px; margin-top: 5px; }
-        .errorlist { color: #E07A5F; font-size: 0.9rem; font-weight: 500; padding: 10px; background-color: #fdf2f0; border-radius: 8px; list-style: none; margin: 0 0 10px 0; border: 1px solid #fadbd6; }
+        .errorlist { color: var(--accent-orange); font-size: 0.9rem; font-weight: 500; padding: 10px; background-color: #fdf2f0; border-radius: 8px; list-style: none; margin: 0 0 10px 0; border: 1px solid #fadbd6; }
         
-        .btn-submit { background-color: #E07A5F; color: white; padding: 15px 20px; border: none; border-radius: 30px; font-weight: 600; font-size: 1rem; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-top: 15px; }
+        .btn-submit { background-color: var(--accent-orange); color: white; padding: 15px 20px; border: none; border-radius: 30px; font-weight: 600; font-size: 1rem; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-top: 15px; }
         .btn-submit:hover { background-color: #c9674e; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(224, 122, 95, 0.4); }
         
-        .back-link { display: block; text-align: center; margin-top: 25px; color: #777; text-decoration: none; font-size: 0.9rem; }
-        .back-link strong { color: #2C1E16; font-weight: 600; }
+        .back-link { display: block; text-align: center; margin-top: 25px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+        .back-link strong { color: var(--text-main); font-weight: 600; }
         .back-link:hover strong { text-decoration: underline; }
     </style>
 </head>
@@ -38,56 +80,50 @@
         
         <form method="post">
             {% csrf_token %}
-            
             {{ form.as_p }}
-            
             <button type="submit" class="btn-submit">Register Account</button>
         </form>
         
         <a href="{% url 'login' %}" class="back-link">Already have an account? <strong>Log in here</strong></a>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 1. Find every password input on the page
             const passwordInputs = document.querySelectorAll('input[type="password"]');
             
+            const iconEye = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+            const iconEyeOff = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+
             passwordInputs.forEach(function(input) {
-                // 2. Create a wrapper div so we can position the icon perfectly inside the input
                 const wrapper = document.createElement('div');
                 wrapper.style.position = 'relative';
                 wrapper.style.display = 'block';
                 wrapper.style.width = '100%';
                 
-                // 3. Move the input inside our new wrapper
                 input.parentNode.insertBefore(wrapper, input);
                 wrapper.appendChild(input);
                 
-                // 4. Create the clickable eye icon
                 const toggleBtn = document.createElement('span');
-                toggleBtn.innerHTML = '👁️'; 
+                toggleBtn.innerHTML = iconEye; 
                 toggleBtn.style.position = 'absolute';
                 toggleBtn.style.right = '12px';
                 toggleBtn.style.top = '50%';
                 toggleBtn.style.transform = 'translateY(-50%)';
                 toggleBtn.style.cursor = 'pointer';
-                toggleBtn.style.fontSize = '1.1rem';
-                toggleBtn.style.userSelect = 'none'; // Stops accidental highlighting
+                toggleBtn.style.color = 'var(--text-muted)';
                 
-                // 5. Add extra padding so long passwords don't hide behind the icon
                 input.style.paddingRight = '40px';
                 
-                // 6. The Toggle Logic
                 toggleBtn.addEventListener('click', function() {
                     if (input.type === 'password') {
-                        input.type = 'text'; // Show text
-                        toggleBtn.innerHTML = '🙈'; // Swap to 'hidden' icon
+                        input.type = 'text';
+                        toggleBtn.innerHTML = iconEyeOff; 
                     } else {
-                        input.type = 'password'; // Hide text
-                        toggleBtn.innerHTML = '👁️'; // Swap to 'visible' icon
+                        input.type = 'password';
+                        toggleBtn.innerHTML = iconEye;
                     }
                 });
                 
-                // 7. Inject the button into the wrapper
                 wrapper.appendChild(toggleBtn);
             });
         });

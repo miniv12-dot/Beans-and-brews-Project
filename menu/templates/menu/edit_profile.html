@@ -5,78 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile | Beans & Brews</title>
     <style>
+        /* IMPORTANT: @import must be the very first line inside <style> */
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap');
+
+        /* THEME VARIABLES */
+        :root {
+            --bg-color: #FAFAFA;
+            --text-main: #2C1E16;
+            --text-muted: #777;
+            --card-bg: white;
+            --border-color: #ddd;
+            --accent-orange: #E07A5F;
+        }
+
+        /* DARK MODE OVERRIDES */
+        [data-theme="dark"] {
+            --bg-color: #1a1614;
+            --text-main: #F5EBE1;
+            --text-muted: #aaa;
+            --card-bg: #2C1E16;
+            --border-color: #4A3022;
+        }
+
+        /* Apply the variables */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
         
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #FAFAFA;
-            color: #2C1E16;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+        .auth-container { 
+            background: var(--card-bg); 
+            padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); max-width: 400px; width: 100%;
+            transition: background-color 0.3s ease;
         }
-        .auth-container {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 400px;
-            width: 100%;
+        
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--text-main); margin-top: 0; margin-bottom: 20px; text-align: center; }
+        
+        /* Form Element Styling */
+        form p { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        label { font-weight: 500; font-size: 0.95rem; color: var(--text-main); }
+        
+        input { 
+            padding: 12px 15px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-family: 'Poppins', sans-serif; 
+            width: 100%; 
+            box-sizing: border-box; 
+            background-color: var(--bg-color); 
+            color: var(--text-main);
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s; 
         }
-        h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #2C1E16;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        form p {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #4A3022;
-        }
-        input {
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-        }
-        .btn-submit {
-            background-color: #E07A5F;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-        .btn-submit:hover {
-            background-color: #c9674e;
-            transform: translateY(-2px);
-        }
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #777;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-        .back-link:hover { color: #2C1E16; text-decoration: underline; }
+        input:focus { border-color: var(--accent-orange); outline: none; }
+        
+        /* Error Feedback Styling (just in case) */
+        .errorlist { color: var(--accent-orange); font-size: 0.85rem; padding: 0; list-style: none; margin: 0; }
+        
+        .btn-submit { background-color: var(--accent-orange); color: white; padding: 15px 20px; border: none; border-radius: 30px; font-weight: 600; font-size: 1rem; width: 100%; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; }
+        .btn-submit:hover { background-color: #c9674e; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(224, 122, 95, 0.4); }
+        
+        .back-link { display: block; text-align: center; margin-top: 25px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .back-link:hover { color: var(--text-main); text-decoration: underline; }
     </style>
 </head>
 <body>
