@@ -48,6 +48,69 @@
         .drink-carousel::-webkit-scrollbar {
             display: none;
         }
+        /* =========================================
+           📱 MOBILE RESPONSIVENESS (Media Queries)
+           ========================================= */
+        @media (max-width: 768px) {
+            /* 1. Stack the Navbar */
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+                text-align: center;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+                width: 100%;
+            }
+            .nav-links a {
+                margin-left: 0; /* Strips out the wide spacing */
+                font-size: 0.95rem;
+            }
+            .cart-icon-link, .theme-btn {
+                margin-left: 0 !important;
+            }
+
+            /* 2. Shrink the Hero Banner */
+            .hero-section {
+                min-height: 300px;
+                padding: 40px 20px;
+                border-radius: 0 0 20px 20px;
+                text-align: center;
+                align-items: center;
+            }
+            .hero-title {
+                font-size: 2.5rem; /* Scales down the giant text */
+            }
+            .hero-subtitle {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            /* 3. Adjust Grid and Cards for smaller screens */
+            .menu-grid {
+                padding: 0 15px;
+                gap: 20px;
+            }
+            .focused-card {
+                margin: 20px 15px !important;
+                padding: 20px !important;
+            }
+            
+            /* 4. Fix Cart Items squishing together */
+            .app-container ul li {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 15px;
+            }
+            .app-container ul li > div:nth-child(2) {
+                width: 100%;
+                justify-content: space-between;
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
