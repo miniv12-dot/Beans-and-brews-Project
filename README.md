@@ -19,11 +19,11 @@ Component | Technology Used
 
 | 🌓 Dual-Theme Engine | 👤 Frictionless Guest Flow |
 | --- | --- |
-| ![Theme Engine](theme-toggle.mp4) | ![Guest Checkout Flow](checkout.png) |
+| ![Theme Engine](/beans_and_brews/images/theme-toggle.mp4) | ![Guest Checkout Flow](/beans_and_brews/images/guest-checkout.png) |
 
 | ☕ Barista Command Center |
 | --- |
-| ![Live Barista Dashboard](images/barista-dashboard.png) |
+| ![Live Barista Dashboard](/beans_and_brews/images/barista-dashboard.png) |
 
 ---
 
