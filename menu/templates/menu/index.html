@@ -13,10 +13,14 @@
         /* THEME VARIABLES */
         :root {
             --bg-color: #FAFAFA;
-            --text-main: #2C1E16;
+            --text-main: #2C1E16;       /* Dark text for the main white body */
             --text-muted: #777;
             --card-bg: white;
-            --nav-bg: #2C1E16;
+            
+            /* Navbar Specific Variables */
+            --nav-bg: #2C1E16;          /* Dark espresso navbar */
+            --nav-text: #FFFFFF;        /* White text to contrast the dark navbar */
+            
             --coffee-roast: #4A3022;
             --accent-orange: #E07A5F;
             --border-color: #eee;
@@ -25,10 +29,14 @@
         /* DARK MODE OVERRIDES */
         [data-theme="dark"] {
             --bg-color: #1a1614; 
-            --text-main: #F5EBE1; 
+            --text-main: #F5EBE1;       /* Light text for the main dark body */
             --text-muted: #aaa;
             --card-bg: #241812; 
-            --nav-bg: #110d0b;
+            
+            /* Navbar Specific Variables */
+            --nav-bg: #110d0b;          /* Almost black navbar */
+            --nav-text: #F5EBE1;        /* Off-white text to contrast the dark navbar */
+            
             --coffee-roast: #e6b9a3;
             --border-color: #241812;
         }
@@ -42,14 +50,14 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Top Navigation Bar - Dynamic Colors Enabled */
+        /* Top Navigation Bar - Now using --nav-text */
         .navbar {
             background-color: var(--nav-bg);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: var(--text-main);
+            color: var(--nav-text);
             border-bottom: 1px solid var(--border-color);
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
@@ -57,7 +65,7 @@
         .navbar-brand {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            color: var(--text-main) !important;
+            color: var(--nav-text) !important;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -71,7 +79,7 @@
         }
 
         .nav-links a {
-            color: var(--text-main);
+            color: var(--nav-text);
             text-decoration: none;
             margin-left: 20px;
             font-size: 0.9rem;
@@ -81,7 +89,7 @@
 
         /* Cart Icon Color Sync */
         .cart-icon-link {
-            color: var(--text-main) !important;
+            color: var(--nav-text) !important;
             transition: all 0.3s ease;
         }
 
@@ -255,7 +263,7 @@
             padding: 30px 20px;
             margin-top: auto;
             background-color: var(--nav-bg);
-            color: var(--text-main);
+            color: var(--nav-text);
             font-size: 0.9rem;
             letter-spacing: 0.5px;
             border-top: 1px solid var(--border-color);
@@ -274,11 +282,11 @@
             text-decoration: underline;
         }
         
-        /* PREMIUM THEME BUTTON */
+        /* PREMIUM THEME BUTTON - Now using --nav-text */
         .theme-btn {
             background: transparent; 
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
+            border: 1px solid var(--nav-text);
+            color: var(--nav-text);
             cursor: pointer;
             border-radius: 50%;
             width: 40px;
@@ -309,7 +317,7 @@
                 <a href="{% url 'edit_profile' %}">Edit Profile</a>
                 <form action="{% url 'logout' %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" style="background:none; border:none; color: var(--text-main); cursor:pointer; font-family:inherit; font-size:0.9rem; margin-left:20px; transition: color 0.3s ease;">Logout</button>
+                    <button type="submit" style="background:none; border:none; color: var(--nav-text); cursor:pointer; font-family:inherit; font-size:0.9rem; margin-left:20px; transition: color 0.3s ease;">Logout</button>
                 </form>
             {% else %}
                 <a href="{% url 'login' %}">Log In</a>
