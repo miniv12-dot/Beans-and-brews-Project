@@ -90,7 +90,15 @@
                         {% for drink in other_drinks %}
                             <div style="background: var(--bg-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; min-width: 140px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center;">
                                 <span style="font-weight: 600; font-size: 0.95rem; display: block; margin-bottom: 4px; color: var(--text-main);">{{ drink.name }}</span>
-                                <span style="color: var(--accent-orange); font-size: 0.9rem; font-weight: 700; margin-bottom: 8px;">R {{ drink.price }}</span>
+                                
+                                {% if drink.discount_price %}
+                                    <div style="margin-bottom: 8px;">
+                                        <span style="color: var(--text-muted); text-decoration: line-through; font-size: 0.75rem; margin-right: 4px;">R {{ drink.price }}</span>
+                                        <span style="color: var(--accent-orange); font-size: 0.9rem; font-weight: 700;">R {{ drink.discount_price }}</span>
+                                    </div>
+                                {% else %}
+                                    <span style="color: var(--accent-orange); font-size: 0.9rem; font-weight: 700; margin-bottom: 8px;">R {{ drink.price }}</span>
+                                {% endif %}
                                 
                                 <a href="{% url 'add_to_cart' drink.id %}" style="text-decoration: none; background-color: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); padding: 5px 12px; font-size: 0.85rem; border-radius: 6px; font-weight: 600;">+ Add</a>
                             </div>

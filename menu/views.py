@@ -50,22 +50,28 @@ def drink_detail(request, drink_id):
 
 # 3. Add to Cart View
 def add_to_cart(request, drink_id):
-    drink = get_object_or_404(Drink, pk=drink_id)
+    drink = get_object_or_404(Drink, id=drink_id)
     cart = request.session.get('cart', {})
-    drink_id_str = str(drink_id)
 
+    # 1. DETERMINE THE ACTIVE PRICE
+    # If a discount exists, use it. Otherwise, use the normal price.
+    active_price = float(drink.discount_price) if drink.discount_price else float(drink.price)
+
+    drink_id_str = str(drink_id)
     if drink_id_str in cart:
         cart[drink_id_str]['quantity'] += 1
+        # Update total based on active price
+        cart[drink_id_str]['total_price'] = cart[drink_id_str]['quantity'] * active_price
     else:
         cart[drink_id_str] = {
-            'name': drink.name, 
-            'price': str(drink.price), 
-            'quantity': 1
+            'name': drink.name,
+            'price': active_price, # 2. SAVE THE ACTIVE PRICE
+            'quantity': 1,
+            'total_price': active_price
         }
-    
+
     request.session['cart'] = cart
     return redirect('cart_detail')
-
 
 # 4. View the Cart View
 def cart_detail(request):

@@ -65,7 +65,18 @@
 
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                 <h1 style="color: var(--text-main); font-size: 2rem; font-weight: 800; margin: 0;">{{ drink.name }}</h1>
-                <span style="color: var(--accent-orange); font-weight: 800; font-size: 1.8rem; white-space: nowrap;">R {{ drink.price }}</span>
+                
+                <div style="text-align: right;">
+                    {% if drink.discount_price %}
+                        <span style="display: block; color: var(--text-muted); text-decoration: line-through; font-size: 1rem; margin-bottom: -5px;">R {{ drink.price }}</span>
+                        <span style="color: var(--accent-orange); font-weight: 800; font-size: 1.8rem; white-space: nowrap;">
+                            R {{ drink.discount_price }}
+                            <span style="background-color: var(--accent-orange); color: white; padding: 3px 10px; border-radius: 12px; font-size: 0.8rem; vertical-align: middle; margin-left: 5px;">SALE</span>
+                        </span>
+                    {% else %}
+                        <span style="color: var(--accent-orange); font-weight: 800; font-size: 1.8rem; white-space: nowrap;">R {{ drink.price }}</span>
+                    {% endif %}
+                </div>
             </div>
 
             <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; margin-bottom: 35px;">
