@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.db.models import Count
 from .models import Drink, Order, OrderItem, Category
 from .forms import CustomRegisterForm
+from django.contrib.auth.decorators import login_required
 
 # 1. The Home Page View (UPDATED: With "Order My Usual" Optimization)
 # 1. The Home Page View

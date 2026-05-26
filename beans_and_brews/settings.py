@@ -136,3 +136,6 @@ STORAGES = {
 
 # FIX: Prevent overzealous WhiteNoise asset verification crashes
 WHITENOISE_MANIFEST_STRICT = False
+
+# Tells Django to redirect unauthorized users here
+LOGIN_URL = 'login'
