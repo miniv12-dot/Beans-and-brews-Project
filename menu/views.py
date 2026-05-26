@@ -91,6 +91,8 @@ def cart_detail(request):
     }
     return render(request, 'menu/cart_detail.html', context)
 
+def is_staff(user):
+    return user.is_staff
 
 # 5. The Checkout View
 def checkout(request):
@@ -108,7 +110,8 @@ def checkout(request):
         new_order = Order.objects.create(
             first_name=f_name,
             last_name=l_name,
-            email=user_email
+            email=user_email,
+            status="Preparing" # Set initial status when order is created
         )
         
         # If logged in, attach the user profile and update their profile names
