@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import login
@@ -208,9 +210,10 @@ def remove_from_cart(request, drink_id):
 # 10. The Private Barista Operations Dashboard
 @user_passes_test(lambda u: u.is_staff)
 def barista_dashboard(request):
-    active_orders = Order.objects.filter(status="Preparing").order_by('created_at')
-    return render(request, 'menu/barista_dashboard.html', {'orders': active_orders})
-
+    # This grabs all orders with the 'Preparing' status and sorts them by oldest first
+    pending_orders = Order.objects.filter(status="Preparing").order_by('created_at')
+    
+    return render(request, 'menu/barista_dashboard.html', {'pending_orders': pending_orders})
 
 # 11. The Database Status Updater Action
 @user_passes_test(lambda u: u.is_staff)
