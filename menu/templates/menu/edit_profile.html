@@ -81,5 +81,11 @@
         </form>
         <a href="{% url 'home' %}" class="back-link">&larr; Back to Menu</a>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+        });
+    </script>
 </body>
 </html>
