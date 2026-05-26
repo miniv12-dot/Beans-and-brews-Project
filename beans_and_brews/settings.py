@@ -139,3 +139,20 @@ WHITENOISE_MANIFEST_STRICT = False
 
 # Tells Django to redirect unauthorized users here
 LOGIN_URL = 'login'
+# ==========================================
+# SESSION & GUEST CART SECURITY
+# ==========================================
+
+# 1. Force Django to save the session to the database (most secure)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# 2. Force the session to save on EVERY single click/page load 
+# (Prevents carts from mysteriously emptying or sharing data)
+SESSION_SAVE_EVERY_REQUEST = True
+
+# 3. Set how long a guest cart lasts before it deletes itself
+# (86400 seconds = 24 hours). This clears out old abandoned carts!
+SESSION_COOKIE_AGE = 86400 
+
+# 4. Expire the guest session the moment they close their browser window entirely
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
