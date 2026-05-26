@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -253,9 +254,10 @@
             opacity: 0.8;
             text-decoration: underline;
         }
+        
       /* PREMIUM THEME BUTTON */
         .theme-btn {
-            background: rgba(255, 255, 255, 0.1); /* Subtle background for the navbar */
+            background: rgba(255, 255, 255, 0.1); 
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             cursor: pointer;
@@ -294,8 +296,7 @@
                 <a href="{% url 'register' %}">Sign Up</a>
             {% endif %}
             
-          <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">
-                </button>
+          <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode"></button>
         </div>
     </nav>
 
@@ -326,10 +327,22 @@
                     {% endif %}
                     <h3 class="drink-name">{{ drink.name }}</h3>
                     <p class="drink-desc">{{ drink.description }}</p>
+                    
                     <div class="drink-meta">
-                        <span class="drink-price">R {{ drink.price }}</span>
+                        {% if drink.discount_price %}
+                            <div style="display: flex; flex-direction: column; gap: 2px;">
+                                <span style="color: var(--text-muted); text-decoration: line-through; font-size: 0.85rem;">R {{ drink.price }}</span>
+                                <span class="drink-price" style="display: flex; align-items: center; gap: 8px;">
+                                    R {{ drink.discount_price }}
+                                    <span style="background-color: var(--accent-orange); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px;">SALE</span>
+                                </span>
+                            </div>
+                        {% else %}
+                            <span class="drink-price">R {{ drink.price }}</span>
+                        {% endif %}
                         <span class="view-badge">Order Now &rarr;</span>
                     </div>
+
                 </div>
             </a>
         {% endfor %}
@@ -343,19 +356,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggleBtn = document.getElementById('theme-toggle');
             
-            // Clean SVG Icons
             const iconMoon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
             const iconSun = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
 
-            // Check memory for a saved theme
             const currentTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', currentTheme);
             
-            // Set the initial icon
             if (themeToggleBtn) {
                 themeToggleBtn.innerHTML = currentTheme === 'dark' ? iconSun : iconMoon;
                 
-                // Listen for clicks
                 themeToggleBtn.addEventListener('click', () => {
                     let theme = document.documentElement.getAttribute('data-theme');
                     let newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -363,16 +372,9 @@
                     document.documentElement.setAttribute('data-theme', newTheme);
                     localStorage.setItem('theme', newTheme);
                     
-                    // Swap the icon instantly
                     themeToggleBtn.innerHTML = newTheme === 'dark' ? iconSun : iconMoon;
                 });
             }
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
         });
     </script>
 </body>

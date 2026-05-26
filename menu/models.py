@@ -16,6 +16,7 @@ class Drink(models.Model):
     
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    discount_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     description = models.TextField()
     is_available = models.BooleanField(default=True)
     image = models.ImageField(upload_to='drinks/', null=True, blank=True)
