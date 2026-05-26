@@ -19,6 +19,7 @@
             --nav-bg: #2C1E16;
             --coffee-roast: #4A3022;
             --accent-orange: #E07A5F;
+            --border-color: #eee;
         }
 
         /* DARK MODE OVERRIDES */
@@ -29,6 +30,7 @@
             --card-bg: #241812; 
             --nav-bg: #110d0b;
             --coffee-roast: #e6b9a3;
+            --border-color: #241812;
         }
 
         body {
@@ -40,25 +42,27 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Top Navigation Bar */
+        /* Top Navigation Bar - Dynamic Colors Enabled */
         .navbar {
             background-color: var(--nav-bg);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
-            transition: background-color 0.3s ease;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .navbar-brand {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            color: white;
+            color: var(--text-main) !important;
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: color 0.3s ease;
         }
 
         .nav-links {
@@ -67,10 +71,23 @@
         }
 
         .nav-links a {
-            color: white;
+            color: var(--text-main);
             text-decoration: none;
             margin-left: 20px;
             font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        /* Cart Icon Color Sync */
+        .cart-icon-link {
+            color: var(--text-main) !important;
+            transition: all 0.3s ease;
+        }
+
+        .cart-icon-link:hover {
+            color: var(--accent-orange) !important;
+            transform: scale(1.1);
         }
 
         /* The Hero Banner */
@@ -238,9 +255,11 @@
             padding: 30px 20px;
             margin-top: auto;
             background-color: var(--nav-bg);
-            color: white;
+            color: var(--text-main);
             font-size: 0.9rem;
             letter-spacing: 0.5px;
+            border-top: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
        .site-footer a {
@@ -255,11 +274,11 @@
             text-decoration: underline;
         }
         
-      /* PREMIUM THEME BUTTON */
+        /* PREMIUM THEME BUTTON */
         .theme-btn {
-            background: rgba(255, 255, 255, 0.1); 
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
+            background: transparent; 
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
             cursor: pointer;
             border-radius: 50%;
             width: 40px;
@@ -274,31 +293,30 @@
         .theme-btn:hover {
             background: var(--accent-orange);
             border-color: var(--accent-orange);
+            color: white !important;
             transform: scale(1.05);
-        }
-        .cart-icon-link:hover {
-            color: var(--accent-orange) !important;
-            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
 
-    <div class="nav-links">
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">☕ Beans & Brews</a>
+        <div class="nav-links">
             {% if user.is_authenticated %}
                 <a href="#">Hello, {{ user.username }}!</a>
                 <a href="{% url 'my_orders' %}">My Orders</a>
                 <a href="{% url 'edit_profile' %}">Edit Profile</a>
                 <form action="{% url 'logout' %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" style="background:none; border:none; color:white; cursor:pointer; font-family:inherit; font-size:0.9rem; margin-left:20px;">Logout</button>
+                    <button type="submit" style="background:none; border:none; color: var(--text-main); cursor:pointer; font-family:inherit; font-size:0.9rem; margin-left:20px; transition: color 0.3s ease;">Logout</button>
                 </form>
             {% else %}
                 <a href="{% url 'login' %}">Log In</a>
                 <a href="{% url 'register' %}">Sign Up</a>
             {% endif %}
             
-            <a href="{% url 'cart_detail' %}" style="position: relative; display: flex; align-items: center; color: white; text-decoration: none; margin-left: 25px; transition: 0.3s;" class="cart-icon-link">
+            <a href="{% url 'cart_detail' %}" style="position: relative; display: flex; align-items: center; text-decoration: none; margin-left: 25px;" class="cart-icon-link">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="9" cy="21" r="1"></circle>
                     <circle cx="20" cy="21" r="1"></circle>
@@ -368,7 +386,7 @@
         <p>Designed and Engineered by <a href="https://www.linkedin.com/in/minenhle-bhengu-6b8b962b5/" target="_blank" rel="noopener noreferrer">Minenhle Bhengu</a> &copy; 2026</p>
     </footer>
 
-   <script>
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggleBtn = document.getElementById('theme-toggle');
             
