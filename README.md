@@ -68,7 +68,7 @@ Spin up the server environment locally on your native machine in minutes:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/YOUR_USERNAME/beans-and-brews.git](https://github.com/YOUR_USERNAME/beans-and-brews.git)
+   git clone [https://github.com/miniv12-dot/Beans-and-brews-Project](https://github.com/miniv12-dot/Beans-and-brews-Project)
    cd beans-and-brews
    Establish your virtual environment:
 
