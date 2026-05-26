@@ -104,12 +104,14 @@ def checkout(request):
         l_name = request.POST.get('last_name')
         user_email = request.POST.get('email')
         
+        # Create the base order record
         new_order = Order.objects.create(
             first_name=f_name,
             last_name=l_name,
             email=user_email
         )
         
+        # If logged in, attach the user profile and update their profile names
         if request.user.is_authenticated:
             new_order.user = request.user
             new_order.save()
@@ -119,6 +121,7 @@ def checkout(request):
             request.user.email = user_email
             request.user.save()
             
+        # SHIFTED THIS OUTSIDE: This now saves items for BOTH guests and users!
         for drink_id, item in cart.items():
             drink_obj = Drink.objects.get(id=int(drink_id))
             OrderItem.objects.create(
@@ -128,11 +131,11 @@ def checkout(request):
                 quantity=item['quantity']
             )
             
+        # Clear the session cart memory
         request.session['cart'] = {}
         return render(request, 'menu/order_success.html', {'order': new_order})
         
     return render(request, 'menu/checkout.html', {'cart': cart})
-
 
 # 6. Customer Registration View
 def register(request):
